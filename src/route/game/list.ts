@@ -1,12 +1,10 @@
 import { Response, Request } from "express";
 import { DB } from "../../utils/db";
-import { isNumeric } from "../../utils/utils";
 
 
 export const listGame = (req: Request, res: Response) => {
     const id: any = req.query.id;
-    if (isNumeric(id)) {
-        DB.query(`
+    DB.query(`
             SELECT
                 Game.id AS game_id,
                 Game.title AS game_title,
@@ -25,22 +23,18 @@ export const listGame = (req: Request, res: Response) => {
             INNER JOIN Question
             ON Question.id_game = Game.id
             `,
-            [],
-            function (err, game) {
-                if (err) throw err;
+        [],
+        function (err, game) {
+            if (err) throw err;
 
-                if (game.length >= 0) {
-                    res.send(game);
-                }
-                else {
-                    res.send("not_found");
-                }
+            if (game.length >= 0) {
+                res.send(game);
             }
-        );
-    }
-    else {
-        res.send("bad_value");
-    }
+            else {
+                res.send("not_found");
+            }
+        }
+    );
 }
 
 
