@@ -1,5 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { initDB } from './utils/db';
+
+initDB();
 
 // Port du server
 const port = 3000;
