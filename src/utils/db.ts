@@ -43,14 +43,14 @@ export const initDB = () => {
     DB.query(`
         CREATE TABLE IF NOT EXISTS Answer (
             id INT NOT NULL AUTO_INCREMENT,
-            question_id INT NOT NULL,
+            id_question INT NOT NULL,
 
             value TEXT NOT NULL,
             count INT NOT NULL DEFAULT 1,
             
             PRIMARY KEY (id),
 
-            FOREIGN KEY (question_id) REFERENCES Question(id) ON DELETE CASCADE
+            FOREIGN KEY (id_question) REFERENCES Question(id) ON DELETE CASCADE
         );
     `);
 

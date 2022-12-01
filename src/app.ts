@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { initDB } from './utils/db';
+import { gameRoute } from './route/game';
 
 initDB();
 
@@ -19,6 +20,8 @@ app.use(bodyParser.urlencoded({
     limit: '10mb'
 }));
 app.use(bodyParser.json({ limit: '10mb' }));
+
+gameRoute(app);
 
 app.listen(port, () => {
     //importData(data_test);
