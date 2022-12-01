@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { initDB } from './utils/db';
+import { answerRoute } from './route/answer';
 
 initDB();
 
@@ -19,6 +20,12 @@ app.use(bodyParser.urlencoded({
     limit: '10mb'
 }));
 app.use(bodyParser.json({ limit: '10mb' }));
+
+
+// Importation des routes
+answerRoute(app);
+
+
 
 app.listen(port, () => {
     //importData(data_test);
