@@ -3,7 +3,7 @@ import { DB } from "../../utils/db";
 import { isNumeric } from "../../utils/utils";
 
 
-export const getGame = (req: Request, res: Response) => {
+export const listGame = (req: Request, res: Response) => {
     const id: any = req.query.id;
     if (isNumeric(id)) {
         DB.query(`
@@ -24,10 +24,8 @@ export const getGame = (req: Request, res: Response) => {
 
             INNER JOIN Question
             ON Question.id_game = Game.id
-
-            WHERE Game.id = ?
             `,
-            [parseInt(id)],
+            [],
             function (err, game) {
                 if (err) throw err;
 
