@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { initDB } from './utils/db';
 import { gameRoute } from './route/game';
 import { answerRoute } from './route/answer';
+import { setHeader } from './utils/header';
 
 initDB();
 
@@ -27,6 +28,12 @@ app.use(bodyParser.json({ limit: '10mb' }));
 answerRoute(app);
 gameRoute(app);
 
+app.use('/', function(req, res, next) {
+    console.log('Request Type:', req.method);
+    setHeader(req, res);
+    console.log('Request URL:', req.originalUrl);
+    next();
+  });
 
 app.listen(port, () => {
     //importData(data_test);

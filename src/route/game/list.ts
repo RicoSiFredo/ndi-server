@@ -1,8 +1,11 @@
 import { Response, Request } from "express";
 import { DB } from "../../utils/db";
+import { setHeader } from "../../utils/header";
 
 
 export const listGame = (req: Request, res: Response) => {
+    console.log("listGame");
+    setHeader(req, res);
     const id: any = req.query.id;
     DB.query(`
             SELECT
@@ -25,13 +28,19 @@ export const listGame = (req: Request, res: Response) => {
             `,
         [],
         function (err, game) {
+            console.log("listGame2");
             if (err) throw err;
+            console.log("listGame4");
 
             if (game.length >= 0) {
-                res.send(game);
+                res.send({
+                    "result": game
+                });
             }
             else {
-                res.send("not_found");
+                res.send({
+                    error: "not_found"
+                });
             }
         }
     );
