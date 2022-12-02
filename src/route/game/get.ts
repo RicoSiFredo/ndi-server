@@ -1,12 +1,14 @@
 import { Response, Request } from "express";
 import { DB } from "../../utils/db";
 import { setHeader } from "../../utils/header";
+import { isNumeric } from "../../utils/utils";
 
 
 export const getGame = (req: Request, res: Response) => {
     setHeader(req, res);
     const id: any = req.query.id;
-    DB.query(`
+    if (isNumeric(id)) {
+        DB.query(`
             SELECT
                 Game.id AS game_id,
                 Game.title AS game_title,
@@ -27,22 +29,23 @@ export const getGame = (req: Request, res: Response) => {
 
             WHERE Game.id = ?
             `,
-        [parseInt(id)],
-        function (err, game) {
-            if (err) throw err;
+            [parseInt(id)],
+            function (err, game) {
+                if (err) throw err;
 
-            if (game.length >= 0) {
-                res.send({
-                    "result": game
-                });
+                if (game.length >= 0) {
+                    res.send({
+                        "result": game
+                    });
+                }
+                else {
+                    res.send({
+                        error: "not_found"
+                    });
+                }
             }
-            else {
-                res.send({
-                    error: "not_found"
-                });
-            }
-        }
-    );
+        );
+    }
 }
 
 
